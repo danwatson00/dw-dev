@@ -1,0 +1,50 @@
+.axe-card {
+  background-image: url("../images/guitar_dark.jpg");
+  color: white;
+}
+
+.camera {
+  background-image: url("../images/camera-bkd.jpg");
+  color: white;
+}
+
+.hackathon {
+  background-image: url("../images/bgc_bkg.jpg");
+  color: white;
+}
+
+.portfolio-card {
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  padding-left: 50px;
+  padding-top: 100px;
+}
+
+h2 {
+  font-size: 3.5rem;
+  margin: 0;
+}
+
+.card-detail {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 350px;
+}
+
+.card-intro {
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+  font-size: 1.25rem;
+  color: black;
+}
+
+p {
+  margin: 0;
+}
+
+.link-btn {
+  grid-row: 2;
+  justify-self: end;
+}

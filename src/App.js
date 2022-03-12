@@ -1,23 +1,67 @@
-import './App.css';
+import * as React from 'react';
+// import './App.css'; file not used delete later
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import Layout from './components/Layout';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const theme = createTheme({
-  status: {
-    danger: '#ff0505',
-  },
-});
+
+
+export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
+
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <Layout />
-        <CssBaseline />
-      </ThemeProvider>
-    </div>
+      <Layout />
   );
 }
 
-export default App;
+export default function ToggleColorMode() {
+  const [mode, setMode] = React.useState('light');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  React.useEffect(() => {
+    console.log("prefersDarkMode", prefersDarkMode);
+    if (prefersDarkMode) {
+      setMode('dark');
+    }
+  }, []);
+  
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: mode,
+          text:{
+            primary: mode === 'light' ? '#333333' : "#FFFFFF",
+            secondary: "#333333"
+          },
+          status: {
+            danger: '#ff0505',
+          },
+          background: {
+            default: mode === 'light' ? '#FAF9F6' : '#333333',
+            paper: mode === 'light' ? '#ffffff' : ''
+          },
+        },
+      }),
+    [mode],
+  );
+
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <App />
+        <CssBaseline />
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
+}
